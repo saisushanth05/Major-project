@@ -236,14 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
           label: 'Customer Ratings Count',
           data: values,
           backgroundColor: [
-            'rgba(244, 63, 94, 0.75)',
-            'rgba(245, 158, 11, 0.75)',
-            'rgba(56, 189, 248, 0.75)',
-            'rgba(16, 185, 129, 0.75)',
-            'rgba(168, 85, 247, 0.75)'
+            'rgba(27, 51, 96, 0.85)',   // 1-star: Dark Blue (Pantone 654 C)
+            'rgba(107, 150, 201, 0.75)',// 2-star: Light Blue (Pantone 279 C)
+            'rgba(153, 153, 153, 0.75)',// 3-star: Silver (Pantone 877)
+            'rgba(203, 213, 225, 0.85)',// 4-star: Light Silver
+            'rgba(209, 0, 42, 0.85)'    // 5-star: Red (Pantone 186 C)
           ],
           borderColor: [
-            '#f43f5e', '#f59e0b', '#38bdf8', '#10b981', '#a855f7'
+            '#1B3360', '#6B96C9', '#999999', '#CBD5E1', '#D1002A'
           ],
           borderWidth: 1.5,
           borderRadius: 6
@@ -256,8 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
           legend: { display: false }
         },
         scales: {
-          x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } },
-          y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } }
+          x: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: '#64748B' } },
+          y: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: '#64748B' } }
         }
       }
     });
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (const [feat, s] of Object.entries(statsDict)) {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td style="font-weight: 600; color: #fff;">${feat}</td>
+        <td style="font-weight: 600; color: var(--text-primary);">${feat}</td>
         <td>${s.mean.toFixed(2)}</td>
         <td>${s.std.toFixed(2)}</td>
         <td>${s.median.toFixed(2)}</td>
@@ -292,9 +292,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${r.LOCATION}</td>
         <td>${r.VALUE}</td>
         <td>${r.ROOMS}</td>
-        <td style="color: var(--amber-warning); font-weight: 600;">${r.SERVICE}</td>
+        <td style="color: var(--m-red); font-weight: 600;">${r.SERVICE}</td>
         <td>${r.SLEEP_QUALITY}</td>
-        <td><span class="badge-tag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">${r.USER_OVERALL_RATING}</span></td>
+        <td><span class="badge-tag" style="background: rgba(107, 150, 201, 0.15); color: var(--m-light-blue);">${r.USER_OVERALL_RATING}</span></td>
       `;
       tbody.appendChild(tr);
     });
@@ -368,8 +368,8 @@ document.addEventListener('DOMContentLoaded', () => {
         datasets: [{
           label: 'OLS Coefficient (β)',
           data: values,
-          backgroundColor: labels.map((_, i) => i === 0 ? 'rgba(56, 189, 248, 0.85)' : 'rgba(59, 130, 246, 0.65)'),
-          borderColor: '#38bdf8',
+          backgroundColor: labels.map((_, i) => i === 0 ? 'rgba(209, 0, 42, 0.85)' : 'rgba(107, 150, 201, 0.75)'),
+          borderColor: labels.map((_, i) => i === 0 ? '#D1002A' : '#6B96C9'),
           borderWidth: 1.5,
           borderRadius: 6
         }]
@@ -383,11 +383,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         scales: {
           x: { 
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }, 
-            ticks: { color: '#94a3b8' },
-            title: { display: true, text: 'Coefficient Weight (β)', color: '#94a3b8' }
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }, 
+            ticks: { color: '#64748B' },
+            title: { display: true, text: 'Coefficient Weight (β)', color: '#1B3360' }
           },
-          y: { grid: { display: false }, ticks: { color: '#f8fafc', font: { weight: '600' } } }
+          y: { grid: { display: false }, ticks: { color: '#1B3360', font: { weight: '600' } } }
         }
       }
     });
@@ -398,12 +398,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.charts.aspectCurves) state.charts.aspectCurves.destroy();
 
     const palette = {
-      SERVICE: '#f59e0b',
-      VALUE: '#38bdf8',
-      ROOMS: '#a855f7',
-      SLEEP_QUALITY: '#10b981',
-      CLEANLINESS: '#ec4899',
-      LOCATION: '#64748b'
+      SERVICE: '#D1002A',        // Red (Pantone 186 C) - Top Driver
+      VALUE: '#6B96C9',          // Light Blue (Pantone 279 C)
+      ROOMS: '#1B3360',          // Dark Blue (Pantone 654 C)
+      SLEEP_QUALITY: '#999999',  // Silver (Pantone 877)
+      CLEANLINESS: '#94A3B8',    // Light Silver/Slate
+      LOCATION: '#64748B'        // Titanium Slate
     };
 
     const scores = ['1', '2', '3', '4', '5'];
@@ -413,8 +413,8 @@ document.addEventListener('DOMContentLoaded', () => {
       datasets.push({
         label: feat,
         data: scores.map(s => scoreMap[s] || null),
-        borderColor: palette[feat] || '#fff',
-        backgroundColor: palette[feat] || '#fff',
+        borderColor: palette[feat] || '#1B3360',
+        backgroundColor: palette[feat] || '#1B3360',
         borderWidth: feat === 'SERVICE' ? 3 : 2,
         tension: 0.25,
         pointRadius: 4,
@@ -432,14 +432,14 @@ document.addEventListener('DOMContentLoaded', () => {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'bottom', labels: { boxWidth: 12, color: '#94a3b8' } }
+          legend: { position: 'bottom', labels: { boxWidth: 12, color: '#475569' } }
         },
         scales: {
-          x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } },
+          x: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: '#64748B' } },
           y: { 
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }, 
-            ticks: { color: '#94a3b8' },
-            title: { display: true, text: 'Mean Overall Rating', color: '#94a3b8' }
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }, 
+            ticks: { color: '#64748B' },
+            title: { display: true, text: 'Mean Overall Rating', color: '#1B3360' }
           }
         }
       }
@@ -457,9 +457,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       const r = corrMap[c.feature] ? corrMap[c.feature].pearson_r : 0.0;
       tr.innerHTML = `
-        <td style="font-weight: 600; color: #fff;">${c.feature}</td>
-        <td style="color: var(--cyan-primary);">${r.toFixed(4)}</td>
-        <td style="font-weight: 700; color: #fff;">${c.coefficient.toFixed(4)}</td>
+        <td style="font-weight: 600; color: var(--text-primary);">${c.feature}</td>
+        <td style="color: var(--m-light-blue); font-weight: 600;">${r.toFixed(4)}</td>
+        <td style="font-weight: 700; color: var(--m-dark-blue);">${c.coefficient.toFixed(4)}</td>
         <td>${c.std_error.toFixed(4)}</td>
         <td>${c.t_statistic.toFixed(3)}</td>
         <td>${c.p_value_formatted}</td>
@@ -481,9 +481,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       const r = corrMap[c.feature] ? corrMap[c.feature].pearson_r : 0.0;
       tr.innerHTML = `
-        <td style="font-weight: 600; color: #fff;">${c.feature}</td>
+        <td style="font-weight: 600; color: var(--text-primary);">${c.feature}</td>
         <td>${r.toFixed(4)}</td>
-        <td style="font-weight: 700;">${c.coefficient.toFixed(4)}</td>
+        <td style="font-weight: 700; color: var(--m-dark-blue);">${c.coefficient.toFixed(4)}</td>
         <td>${c.std_error.toFixed(4)}</td>
         <td>${c.t_statistic.toFixed(3)}</td>
         <td>${c.p_value_formatted}</td>
@@ -624,26 +624,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getQuantumColor(val) {
-    // Elegant color interpolation:
-    // 0.0: dark slate #0b1120 -> 0.5: indigo #4338ca -> 0.8: violet #8b5cf6 -> 1.0: white/cyan #e0f2fe
+    // Official BMW M Giugiaro Color Ramp:
+    // 0.0 -> Dark Blue (#1B3360) -> Light Blue (#6B96C9) -> Silver (#CBD5E1) -> Red (#D1002A) [1.0]
     const clamped = Math.max(0, Math.min(1, val));
-    if (clamped < 0.5) {
-      const t = clamped / 0.5;
-      const r = Math.round(11 + t * (67 - 11));
-      const g = Math.round(17 + t * (56 - 17));
-      const b = Math.round(32 + t * (202 - 32));
+    if (clamped < 0.45) {
+      const t = clamped / 0.45;
+      const r = Math.round(11 + t * (27 - 11));
+      const g = Math.round(18 + t * (51 - 18));
+      const b = Math.round(32 + t * (96 - 32));
       return `rgb(${r}, ${g}, ${b})`;
-    } else if (clamped < 0.85) {
-      const t = (clamped - 0.5) / 0.35;
-      const r = Math.round(67 + t * (139 - 67));
-      const g = Math.round(56 + t * (92 - 56));
-      const b = Math.round(202 + t * (246 - 202));
+    } else if (clamped < 0.75) {
+      const t = (clamped - 0.45) / 0.30;
+      const r = Math.round(27 + t * (107 - 27));
+      const g = Math.round(51 + t * (150 - 51));
+      const b = Math.round(96 + t * (201 - 96));
+      return `rgb(${r}, ${g}, ${b})`;
+    } else if (clamped < 0.90) {
+      const t = (clamped - 0.75) / 0.15;
+      const r = Math.round(107 + t * (203 - 107));
+      const g = Math.round(150 + t * (213 - 150));
+      const b = Math.round(201 + t * (225 - 201));
       return `rgb(${r}, ${g}, ${b})`;
     } else {
-      const t = (clamped - 0.85) / 0.15;
-      const r = Math.round(139 + t * (224 - 139));
-      const g = Math.round(92 + t * (242 - 92));
-      const b = Math.round(246 + t * (254 - 246));
+      const t = (clamped - 0.90) / 0.10;
+      const r = Math.round(203 + t * (209 - 203));
+      const g = Math.round(213 + t * (0 - 213));
+      const b = Math.round(225 + t * (42 - 225));
       return `rgb(${r}, ${g}, ${b})`;
     }
   }
@@ -662,18 +668,18 @@ document.addEventListener('DOMContentLoaded', () => {
         labels: labels,
         datasets: [
           {
-            label: 'Classical Linear SVM',
+            label: 'Classical Linear SVM (Light Blue)',
             data: classicalVals,
-            backgroundColor: 'rgba(59, 130, 246, 0.75)',
-            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(107, 150, 201, 0.80)',
+            borderColor: '#6B96C9',
             borderWidth: 1.5,
             borderRadius: 4
           },
           {
-            label: 'Quantum Kernel SVM',
+            label: 'Quantum Kernel SVM (M Red)',
             data: quantumVals,
-            backgroundColor: 'rgba(168, 85, 247, 0.75)',
-            borderColor: '#a855f7',
+            backgroundColor: 'rgba(209, 0, 42, 0.85)',
+            borderColor: '#D1002A',
             borderWidth: 1.5,
             borderRadius: 4
           }
@@ -683,16 +689,16 @@ document.addEventListener('DOMContentLoaded', () => {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'top', labels: { color: '#94a3b8' } }
+          legend: { position: 'top', labels: { color: '#1B3360', font: { weight: '600' } } }
         },
         scales: {
-          x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } },
+          x: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: '#64748B' } },
           y: { 
             min: 0.5, 
             max: 1.05, 
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }, 
-            ticks: { color: '#94a3b8', callback: v => `${(v * 100).toFixed(0)}%` },
-            title: { display: true, text: 'Test Fold Accuracy', color: '#94a3b8' }
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }, 
+            ticks: { color: '#64748B', callback: v => `${(v * 100).toFixed(0)}%` },
+            title: { display: true, text: 'Test Fold Accuracy', color: '#1B3360' }
           }
         }
       }
@@ -707,13 +713,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       const diff = f.quantum_accuracy - f.classical_accuracy;
       const winner = diff > 0 ? 'Quantum' : (diff < 0 ? 'Classical' : 'Tied');
-      const winnerColor = diff > 0 ? 'var(--violet-primary)' : (diff < 0 ? 'var(--blue-primary)' : '#94a3b8');
+      const winnerColor = diff > 0 ? 'var(--m-red)' : (diff < 0 ? 'var(--m-dark-blue)' : '#64748B');
 
       tr.innerHTML = `
-        <td style="font-weight: 600; color: #fff;">Fold ${f.fold}</td>
+        <td style="font-weight: 600; color: var(--text-primary);">Fold ${f.fold}</td>
         <td>${(f.classical_accuracy * 100).toFixed(1)}%</td>
-        <td style="font-weight: 600; color: var(--violet-primary);">${(f.quantum_accuracy * 100).toFixed(1)}%</td>
-        <td style="color: ${diff >= 0 ? 'var(--emerald-success)' : 'var(--rose-danger)'};">${diff >= 0 ? '+' : ''}${(diff * 100).toFixed(1)}%</td>
+        <td style="font-weight: 600; color: var(--m-red);">${(f.quantum_accuracy * 100).toFixed(1)}%</td>
+        <td style="color: ${diff >= 0 ? 'var(--m-dark-blue)' : 'var(--m-red)'}; font-weight: 600;">${diff >= 0 ? '+' : ''}${(diff * 100).toFixed(1)}%</td>
         <td>${f.classical_f1.toFixed(3)}</td>
         <td>${f.quantum_f1.toFixed(3)}</td>
         <td style="font-weight: 700; color: ${winnerColor};">${winner}</td>
