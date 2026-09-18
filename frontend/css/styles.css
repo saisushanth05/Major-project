@@ -56,6 +56,7 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Outfit', var(--font-sans);
   --font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+  --font-cursive: 'Great Vibes', 'Dancing Script', 'Brush Script MT', cursive;
   
   --shadow-sm: 0 2px 8px rgba(27, 51, 96, 0.06);
   --shadow-md: 0 4px 20px rgba(27, 51, 96, 0.10);
@@ -88,6 +89,8 @@ body {
   font-size: 15px;
   line-height: 1.6;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
 }
 
@@ -155,6 +158,7 @@ body {
   letter-spacing: -0.02em;
   background: linear-gradient(90deg, #1B3360 0%, #6B96C9 60%, #D1002A 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -290,9 +294,11 @@ body {
    ========================================================================== */
 
 .main-container {
+  width: 100%;
   max-width: 1440px;
   margin: 0 auto;
   padding: 2rem;
+  flex: 1;
 }
 
 .tab-pane {
@@ -781,6 +787,7 @@ body {
 
 .custom-range {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   height: 6px;
   background: var(--m-silver-light);
@@ -915,11 +922,15 @@ body {
 
 .app-footer {
   text-align: center;
-  padding: 2.5rem 2rem;
+  padding: 2rem 2rem 2.25rem 2rem;
   border-top: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text-muted);
   font-size: 0.82rem;
   position: relative;
+  margin-top: auto;
 }
 
 .app-footer::after {
@@ -930,4 +941,117 @@ body {
   right: 0;
   height: 2px;
   background: var(--m-tri-color);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.footer-meta {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+/* ==========================================================================
+   Signature Mark (Slight, Elegant Cursive Handwriting)
+   ========================================================================== */
+
+.signature-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.2rem 1rem;
+}
+
+.sig-line {
+  display: inline-block;
+  width: 35px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(107, 150, 201, 0.45));
+}
+
+.sig-line.right {
+  background: linear-gradient(90deg, rgba(107, 150, 201, 0.45), transparent);
+}
+
+.signature-cursive {
+  font-family: var(--font-cursive);
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--m-dark-blue);
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  user-select: none;
+  line-height: 1.2;
+}
+
+.signature-cursive:hover {
+  opacity: 1;
+  color: var(--m-red);
+  transform: rotate(0deg) scale(1.06);
+}
+
+/* Report Tab Sign-off */
+.report-sign-off {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.report-sign-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.report-sign-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* Print Styles */
+@media print {
+  .app-header,
+  .nav-bar,
+  .loading-overlay,
+  #btnPrintReport {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+  }
+
+  .main-container {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .app-footer {
+    display: block !important;
+    border-top: 1px solid #ccc !important;
+    padding: 1rem 0 !important;
+    margin-top: 2rem !important;
+    page-break-after: avoid;
+  }
+
+  .signature-cursive {
+    color: #1B3360 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
